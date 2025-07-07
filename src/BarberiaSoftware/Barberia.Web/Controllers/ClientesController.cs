@@ -1,44 +1,68 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Barberia.Web.Models;
+﻿using Barberia.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace Barberia.Web.Controllers
 {
     public class ClientesController : Controller
     {
-        private static List<Cliente> _clientes = new List<Cliente>
+        private readonly HttpClient _httpClient;
+
+        public ClientesController(IHttpClientFactory httpClientFactory)
         {
-            new Cliente
-            {
-                Id = 1,
-                Nombre = "Juan Pérez",
-                Email = "juan@perez.com",
-                Telefono = "809-123-4567",
-                Direccion = "Calle Altagracia",
-                Estado = Cliente.EstadoCliente.EnCola
-            },
-            new Cliente
-            {
-                Id = 2,
-                Nombre = "Ana Gómez",
-                Email = "ana@gomez.com",
-                Telefono = "829-987-6543",
-                Direccion = "Av. Siempre Viva 742",
-                Estado = Cliente.EstadoCliente.Atendido
-            }
-        };
+            _httpClient = httpClientFactory.CreateClient();
+        }
+
+        //private static List<Cliente> _clientes = new List<Cliente>
+        //{
+        //    new Cliente
+        //    {
+        //        Id = 1,
+        //        Nombre = "Juan Pérez",
+        //        Email = "juan@perez.com",
+        //        Telefono = "809-123-4567",
+        //        Direccion = "Calle Altagracia",
+        //        Estado = Cliente.EstadoCliente.EnCola
+        //    },
+        //    new Cliente
+        //    {
+        //        Id = 2,
+        //        Nombre = "Ana Gómez",
+        //        Email = "ana@gomez.com",
+        //        Telefono = "829-987-6543",
+        //        Direccion = "Av. Siempre Viva 742",
+        //        Estado = Cliente.EstadoCliente.Atendido
+        //    }
+        //};
 
         // GET: Clientes
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_clientes);
+            var response = await _httpClient.GetAsync("https://localhost:7179/api/clientes");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var clientes = JsonConvert.DeserializeObject<List<Cliente>>(json);
+                return View(clientes);
+            }
+            return View(new List<Cliente>());
         }
 
         // GET: Clientes/Details/1
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var cliente = _clientes.FirstOrDefault(c => c.Id == id);
-            if (cliente == null) return NotFound();
-            return View(cliente);
+            var response = await _httpClient.GetAsync($"https://localhost:7179/api/clientes/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var cliente = JsonConvert.DeserializeObject<Cliente>(json);
+                return View(cliente);
+            }
+
+            return NotFound();
         }
 
         // GET: Clientes/Create
@@ -50,65 +74,79 @@ namespace Barberia.Web.Controllers
         // POST: Clientes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Cliente cliente)
+        public async Task<IActionResult> Create(Cliente cliente)
         {
             if (ModelState.IsValid)
             {
-                cliente.Id = _clientes.Max(c => c.Id) + 1;
-                _clientes.Add(cliente);
-                return RedirectToAction(nameof(Index));
+                var json = JsonConvert.SerializeObject(cliente);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("https://localhost:7179/api/clientes", content);
+
+                if (response.IsSuccessStatusCode)
+                    return RedirectToAction(nameof(Index));
             }
+
             return View(cliente);
         }
 
         // GET: Clientes/Edit/1
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var cliente = _clientes.FirstOrDefault(c => c.Id == id);
-            if (cliente == null) return NotFound();
-            return View(cliente);
+            var response = await _httpClient.GetAsync($"https://localhost:7179/api/clientes/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var cliente = JsonConvert.DeserializeObject<Cliente>(json);
+                return View(cliente);
+            }
+
+            return NotFound();
         }
 
         // POST: Clientes/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Cliente cliente)
+        public async Task<IActionResult> Edit(int id, Cliente cliente)
         {
-            var original = _clientes.FirstOrDefault(c => c.Id == id);
-            if (original == null) return NotFound();
-
             if (ModelState.IsValid)
             {
-                original.Nombre = cliente.Nombre;
-                original.Email = cliente.Email;
-                original.Telefono = cliente.Telefono;
-                original.Direccion = cliente.Direccion;
-                original.Estado = cliente.Estado;
-                return RedirectToAction(nameof(Index));
+                var json = JsonConvert.SerializeObject(cliente);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"https://localhost:7179/api/clientes/{id}", content);
+
+                if (response.IsSuccessStatusCode)
+                    return RedirectToAction(nameof(Index));
             }
 
             return View(cliente);
         }
 
         // GET: Clientes/Delete/1
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var cliente = _clientes.FirstOrDefault(c => c.Id == id);
-            if (cliente == null) return NotFound();
-            return View(cliente);
+            var response = await _httpClient.GetAsync($"https://localhost:7179/api/clientes/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var cliente = JsonConvert.DeserializeObject<Cliente>(json);
+                return View(cliente);
+            }
+
+            return NotFound();
         }
 
         // POST: Clientes/DeleteConfirmed/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cliente = _clientes.FirstOrDefault(c => c.Id == id);
-            if (cliente != null)
-            {
-                _clientes.Remove(cliente);
-            }
+            var response = await _httpClient.DeleteAsync($"https://localhost:7179/api/clientes/{id}");
             return RedirectToAction(nameof(Index));
         }
     }
 }
+
