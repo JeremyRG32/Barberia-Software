@@ -11,6 +11,12 @@ namespace Barberia.API.Controllers
         private static List<Cliente> clientes = new List<Cliente>();
         private static int nextId = 1;
 
+        [HttpGet]
+        public ActionResult<List<Cliente>> Get()
+        {
+            return Ok(clientes);
+        }
+
         [HttpGet("{id}")]
         public ActionResult<Cliente> GetById(int id)
         {
@@ -42,6 +48,17 @@ namespace Barberia.API.Controllers
             cliente.Direccion = clienteActualizado.Direccion;
             cliente.LocalesFavoritos = clienteActualizado.LocalesFavoritos;
 
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var cliente = clientes.FirstOrDefault(c => c.Id == id);
+            if (cliente == null)
+                return NotFound();
+
+            clientes.Remove(cliente);
             return NoContent();
         }
     }
