@@ -5,7 +5,6 @@ namespace Barberia.Web.Controllers
 {
     public class ClientesController : Controller
     {
-        // ⚠️ Simulación de base de datos en memoria (debes reemplazarlo por tu lógica real)
         private static List<Cliente> _clientes = new List<Cliente>
         {
             new Cliente
