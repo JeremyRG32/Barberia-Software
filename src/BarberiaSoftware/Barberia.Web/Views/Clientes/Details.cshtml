@@ -1,0 +1,27 @@
+﻿@model Barberia.Web.Models.Cliente
+
+@{
+    ViewData["Title"] = "Detalles del Cliente";
+}
+
+<div class="container mt-5">
+    <h2>Detalles del Cliente</h2>
+    <dl class="row mt-4">
+        <dt class="col-sm-3">Nombre</dt>
+        <dd class="col-sm-9">@Model.Nombre</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+
+        <dt class="col-sm-3">Teléfono</dt>
+        <dd class="col-sm-9">@Model.Telefono</dd>
+
+        <dt class="col-sm-3">Dirección</dt>
+        <dd class="col-sm-9">@Model.Direccion</dd>
+
+        <dt class="col-sm-3">Estado</dt>
+        <dd class="col-sm-9">@Model.Estado</dd>
+    </dl>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">Editar</a>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</div>
