@@ -1,7 +1,6 @@
 ﻿using Barberia.API.Controllers;
 using Barberia.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using Xunit;
 
 public class UsuariosControllerTests
@@ -14,10 +13,10 @@ public class UsuariosControllerTests
         _controller = new UsuariosController();
 
         // Limpiar lista estática antes de cada test
-        var clientesField = typeof(UsuariosController)
-            .GetField("clientes", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        var usuariosField = typeof(UsuariosController)
+            .GetField("usuarios", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
 
-        clientesField.SetValue(null, new List<Usuario>());
+        usuariosField.SetValue(null, new List<Usuario>());
 
         var nextIdField = typeof(UsuariosController)
             .GetField("nextId", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
@@ -30,8 +29,8 @@ public class UsuariosControllerTests
     {
         var result = _controller.Get();
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var clientes = Assert.IsType<List<Usuario>>(okResult.Value);
-        Assert.Empty(clientes);
+        var usuarios = Assert.IsType<List<Usuario>>(okResult.Value);
+        Assert.Empty(usuarios);
     }
 
     [Fact]
@@ -109,4 +108,3 @@ public class UsuariosControllerTests
         Assert.IsType<NotFoundResult>(result);
     }
 }
-
