@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barberia.Web", "Barberia.Web\Barberia.Web.csproj", "{CFE6814E-08C6-4679-9DA0-64BB1F7C07B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barberia.API", "Barberia.API\Barberia.API.csproj", "{1C27497A-F817-4EB9-8DC2-6BF82B6FAE3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "barberia.Api.Tests", "barberia.Api.Tests\barberia.Api.Tests.csproj", "{98DB0D28-405E-4E43-969F-0EC26D5E6528}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1C27497A-F817-4EB9-8DC2-6BF82B6FAE3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C27497A-F817-4EB9-8DC2-6BF82B6FAE3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C27497A-F817-4EB9-8DC2-6BF82B6FAE3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98DB0D28-405E-4E43-969F-0EC26D5E6528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98DB0D28-405E-4E43-969F-0EC26D5E6528}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98DB0D28-405E-4E43-969F-0EC26D5E6528}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98DB0D28-405E-4E43-969F-0EC26D5E6528}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
