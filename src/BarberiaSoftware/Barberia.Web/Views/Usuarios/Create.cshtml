@@ -1,11 +1,11 @@
-﻿@model Barberia.Web.Models.Cliente
+﻿@model Barberia.Web.Models.Usuario
 
 @{
-    ViewData["Title"] = "Agregar Cliente";
+    ViewData["Title"] = "Agregar Usuario";
 }
 
 <div class="container mt-5">
-    <h2>Agregar Cliente</h2>
+    <h2>Agregar Usuario</h2>
     <form asp-action="Create" method="post" class="mt-4">
         <div class="mb-3">
             <label asp-for="Nombre" class="form-label"></label>
@@ -25,7 +25,7 @@
         </div>
         <div class="mb-3">
             <label asp-for="Estado" class="form-label"></label>
-            <select asp-for="Estado" class="form-select" asp-items="Html.GetEnumSelectList<Barberia.Web.Models.Cliente.EstadoCliente>()"></select>
+            <select asp-for="Estado" class="form-select" asp-items="Html.GetEnumSelectList<Barberia.Web.Models.Usuario.EstadoUsuario>()"></select>
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
         <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
