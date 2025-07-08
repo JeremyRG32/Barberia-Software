@@ -1,17 +1,17 @@
 ﻿namespace Barberia.Web.Models
 {
-    public class Cliente
+    public class Usuario
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Email { get; set; }
         public string Telefono { get; set; }
-        public EstadoCliente Estado { get; set; } = EstadoCliente.Default;
+        public EstadoUsuario Estado { get; set; } = EstadoUsuario.Default;
         public string? Direccion { get; set; }
 
         public List<Local>? LocalesFavoritos { get; set; }
 
-        public enum EstadoCliente
+        public enum EstadoUsuario
         {
             Default,
             EnLocal,
